@@ -24,6 +24,7 @@ namespace NeuralNetworkCSharp
         internal Dictionary<int, double[]> _neuronErrors;
         internal double _learningRate;
         internal double[][] _expectedResult;
+        internal double _previousTotalError;
 
         /// <summary>
         /// Constructor of the Neural Network.
@@ -121,6 +122,16 @@ namespace NeuralNetworkCSharp
                     HandleOutputLayer(j);
                     HandleHiddenLayers();
                 }
+                PushInputValues(new double[] { 1, 2 });
+                var answer = GetOutput();
+
+                if (_previousTotalError >= totalError)
+                    _learningRate += _learningRate * .1;
+                else
+                    _learningRate -= _learningRate * .1;
+                _previousTotalError = totalError;
+                Console.WriteLine($"End of epoch {i}. TotalError: {totalError} Learning rate: {_learningRate} Testing 1 + 2 = {answer[0]}");
+
             }
         }
 

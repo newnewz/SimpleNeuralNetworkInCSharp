@@ -22,7 +22,7 @@ namespace NeuralNetworkCSharp.ActivationFunctions
 
         public double CalculateOutput(double input)
         {
-            return Convert.ToDouble(input > _treshold);
+            return Convert.ToSingle(input > _treshold);
         }
     }
 }
