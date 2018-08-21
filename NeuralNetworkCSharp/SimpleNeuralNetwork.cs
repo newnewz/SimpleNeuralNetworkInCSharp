@@ -43,7 +43,7 @@ namespace NeuralNetworkCSharp
             // Create input layer that will collect inputs.
             CreateInputLayer(numberOfInputNeurons);
 
-            _learningRate = 2.95;
+            _learningRate = 0.42;
         }
 
         /// <summary>
@@ -123,14 +123,10 @@ namespace NeuralNetworkCSharp
                     HandleHiddenLayers();
                 }
                 PushInputValues(new double[] { 1, 2 });
-                var answer = GetOutput();
+                var answer = string.Join( ", ", GetOutput());
 
-                if (_previousTotalError >= totalError)
-                    _learningRate += _learningRate * .1;
-                else
-                    _learningRate -= _learningRate * .1;
                 _previousTotalError = totalError;
-                Console.WriteLine($"End of epoch {i}. TotalError: {totalError} Learning rate: {_learningRate} Testing 1 + 2 = {answer[0]}");
+                Console.WriteLine($"End of epoch {i}. TotalError: {totalError} Learning rate: {_learningRate} Testing: {answer}");
 
             }
         }
@@ -141,7 +137,7 @@ namespace NeuralNetworkCSharp
         private void CreateInputLayer(int numberOfInputNeurons)
         {
             var inputLayer = _layerFactory.CreateNeuralLayer(numberOfInputNeurons, new RectifiedActivationFuncion(), new WeightedSumFunction());
-            inputLayer.Neurons.ForEach(x => x.AddInputSynapse(0));
+            inputLayer.Neurons.ForEach(x => x.AddInputSynapse(0.7));
             this.AddLayer(inputLayer);
         }
 
